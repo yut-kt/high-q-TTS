@@ -12,20 +12,6 @@ import (
 	"strings"
 )
 
-func fCreateOpen(path string) *os.File {
-	fOut, err := os.Create(path)
-	if err != nil {
-		panic(err)
-	}
-	return fOut
-}
-
-func fClose(fp *os.File) {
-	if err := fp.Close(); err != nil {
-		panic(err)
-	}
-}
-
 func concatExceptAppearSentence(scanner *bufio.Scanner, reg string) string {
 	var sentencesStr string
 	for scanner.Scan() {
@@ -97,29 +83,23 @@ func writeSentenceMap(foutp *os.File, m sentenceMap) {
 }
 
 func main() {
-	fOutBody := fCreateOpen(env.AllBodyPath)
-	fOutIndexedBody := fCreateOpen(env.AllIndexedBodyPath)
-	fOutUniqueBody := fCreateOpen(env.AllUniqueBodyPath)
-	fOutIndexedUniqueBody := fCreateOpen(env.AllIndexedUniqueBodyPath)
+	fOutBody := file.CreateOpen(env.AllBodyPath)
+	fOutIndexedBody := file.CreateOpen(env.AllIndexedBodyPath)
+	fOutUniqueBody := file.CreateOpen(env.AllUniqueBodyPath)
+	fOutIndexedUniqueBody := file.CreateOpen(env.AllIndexedUniqueBodyPath)
 	defer func() {
-		fClose(fOutBody)
-		fClose(fOutIndexedBody)
-		fClose(fOutUniqueBody)
-		fClose(fOutIndexedUniqueBody)
+		 file.Close(fOutBody)
+		 file.Close(fOutIndexedBody)
+		 file.Close(fOutUniqueBody)
+		 file.Close(fOutIndexedUniqueBody)
 	}()
 
-	filePaths, err := file.FetchPaths(env.OrigDataDir)
-	if err != nil {
-		panic(err)
-	}
+	filePaths := file.FetchPaths(env.OrigDataDir)
 
 	uniqueSentences := make(sentenceMap, 100)
 	index := 0
 	for _, filePath := range filePaths {
-		finp, err := os.Open(filePath)
-		if err != nil {
-			panic(err)
-		}
+		finp := file.Open(filePath)
 
 		sentences := extractSentences(finp)
 		writeStrings(fOutBody, sentences)
@@ -128,9 +108,7 @@ func main() {
 
 		uniqueSentences.register(sentences)
 
-		if err := finp.Close(); err != nil {
-			panic(err)
-		}
+		file.Close(finp)
 	}
 
 	writeSentenceMap(fOutUniqueBody, uniqueSentences)

@@ -3,15 +3,21 @@ package env
 import "os"
 
 var (
-	RootDir                  = os.Getenv("GOPATH") + "/src/github.com/yut-kt/high-q-TTS"
-	OrigDataDir              = RootDir + "/data/dourokoutsuu"
-	AllBodyPath              = RootDir + "/data/all_body.txt"
-	AllIndexedBodyPath       = RootDir + "/data/all_indexed_body.txt"
-	AllUniqueBodyPath        = RootDir + "/data/all_unique_body.txt"
-	AllIndexedUniqueBodyPath = RootDir + "/data/all_indexed_unique_body.txt"
-	ClusterBaseDir           = RootDir + "/data/cluster/base"
+	RootDir = os.Getenv("GOPATH") + "/src/github.com/yut-kt/high-q-TTS"
+
+	dataDir                   = RootDir + "/data"
+	OrigDataDir               = dataDir + "/dourokoutsuu"
+	AllBodyPath               = dataDir + "/all_body.txt"
+	AllIndexedBodyPath        = dataDir + "/all_indexed_body.txt"
+	AllUniqueBodyPath         = dataDir + "/all_unique_body.txt"
+	AllIndexedUniqueBodyPath  = dataDir + "/all_indexed_unique_body.txt"
+	AllPhraseDivisionBodyPath = dataDir + "/all_phrase_division_body.txt"
+
+	clusterBaseDir           = RootDir + "/data/cluster/base"
+	ClusterNormalDir         = clusterBaseDir + "/normal"
+	ClusterPhraseDivisionDir = clusterBaseDir + "/phrase_division"
 	ClusterClassifiedDir     = RootDir + "/data/cluster/classified"
-	
+
 	DataBaseDriver = "sqlite3"
 	DataBase       = RootDir + "/db/high_q_TTS.sqlite"
 )

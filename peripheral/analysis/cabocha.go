@@ -6,6 +6,7 @@ package analysis
 import "C"
 import (
 	"regexp"
+	"strings"
 )
 
 type Cabocha struct {
@@ -25,7 +26,7 @@ func (c *Cabocha) ParseToString(str string) string {
 
 func (c *Cabocha) ParseToWakati(str string) string {
 	tree := c.ParseToString(str)
-	str = regexp.MustCompile(`[-D| ]`).ReplaceAllString(tree, "")
+	str = regexp.MustCompile(`[-D| ]|EOS`).ReplaceAllString(tree, "")
 	str = regexp.MustCompile(`\n`).ReplaceAllString(str, " ")
-	return regexp.MustCompile(` EOS`).ReplaceAllString(str, "")
+	return strings.TrimSpace(str)
 }

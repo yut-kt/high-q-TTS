@@ -25,10 +25,7 @@ func main() {
 	}
 	//tfRepository := repository.TFRepository{dbSession}
 
-	scannabled, text, err := scan()
-	if err != nil {
-		panic(err)
-	}
+	scannabled, text := scan()
 	for line := 1; scannabled; line++ {
 		node := m.ParseToNode(text)
 		println(node.MakeWakatiStr())
@@ -36,9 +33,6 @@ func main() {
 
 		//tfRepository.Create(&entity.TF{Line: line, Str: tfMap.Compress()})
 
-		scannabled, text, err = scan()
-		if err != nil {
-			panic(err)
-		}
+		scannabled, text = scan()
 	}
 }
