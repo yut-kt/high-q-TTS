@@ -65,5 +65,5 @@ func (tfMap TFMap) Compress() string {
 	for key, value := range tfMap {
 		str += key + ":" + strconv.Itoa(value) + ","
 	}
-	return str
+	return str[:len(str)-1]
 }

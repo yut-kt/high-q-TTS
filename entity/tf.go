@@ -1,7 +1,9 @@
 package entity
 
+import "database/sql"
+
 type TF struct {
 	Line  int
 	Str   string
-	Class string
+	Class sql.NullString
 }
