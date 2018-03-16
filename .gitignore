@@ -1,5 +1,6 @@
 data/*
 !data/test_data/
 main/
+main.go
 db/*.sqlite
 .idea/
